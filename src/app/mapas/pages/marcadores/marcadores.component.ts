@@ -1,6 +1,11 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 
+interface MarcadorColor {
+  color: string;
+  marker: mapboxgl.Marker
+}
+
 @Component({
   selector: 'app-marcadores',
   templateUrl: './marcadores.component.html',
@@ -31,6 +36,8 @@ export class MarcadoresComponent implements AfterViewInit {
   zoomLevel: number = 15;
   center: [number, number] = [-70.65436534660041, -33.48892235763639]
 
+  //Arreglo de marcadores 
+  marcadores: MarcadorColor[] = [];
 
   constructor() { }
 
@@ -62,11 +69,16 @@ export class MarcadoresComponent implements AfterViewInit {
       color
     })
       .setLngLat(this.center)
-      .addTo(this.mapa)
+      .addTo(this.mapa);
+
+    this.marcadores.push({
+      color,
+      marker: nuevoMarcador
+    });
   }
 
   irMarcador() {
-
+    // this.mapa.flyTo()
   }
 
 
