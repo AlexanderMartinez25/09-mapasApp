@@ -9,6 +9,15 @@ import * as mapboxgl from "mapbox-gl";
       width:100%;
       height: 100%;
     }
+    .list-group{
+      position:fixed;
+      top:20px;
+      right:20px;
+      z-index:99;
+    }
+    li {
+      cursor:pointer;
+    }
     `
   ]
 })
@@ -38,11 +47,25 @@ export class MarcadoresComponent implements AfterViewInit {
     // markerHtml.innerHTML = 'Hola Mundo';
 
     // Create a new marker.
-    new mapboxgl.Marker({
-      // element: markerHtml
+    // new mapboxgl.Marker()
+    //   .setLngLat(this.center)
+    //   .addTo(this.mapa);
+
+  }
+
+  agregarMarcador() {
+    // generar codigo hex para el color
+    const color = "#xxxxxx".replace(/x/g, y => (Math.random() * 16 | 0).toString(16));
+
+    const nuevoMarcador = new mapboxgl.Marker({
+      draggable: true,
+      color
     })
       .setLngLat(this.center)
-      .addTo(this.mapa);
+      .addTo(this.mapa)
+  }
+
+  irMarcador() {
 
   }
 
