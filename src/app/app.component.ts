@@ -9,6 +9,8 @@ import * as mapboxgl from "mapbox-gl";
 })
 export class AppComponent implements OnInit {
   ngOnInit(): void {
+    // ya que es lo primero que se carga en toda la app 
+    // y lo necesitaremos en todos los componentes
     (mapboxgl as any).accessToken = environment.mapboxToken;
   }
 }
