@@ -4,7 +4,7 @@
     <div class="col-12">
         <label class="form-label">
             Zoom: {{zoomLevel | number: '2.0-2'}}
-            - Lng, Lat: [123,125]
+            - Lng, Lat: {{[center[0] | number: '2.0-2', center[1] | number: '2.0-2']}}
         </label>
         <input #zoomInput (input)="zoomCambio(zoomInput.value)" type="range" class="form-range" id="customRange1"
             [value]="zoomLevel" min="0" max="18">
