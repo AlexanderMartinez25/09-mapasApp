@@ -80,6 +80,10 @@ export class MarcadoresComponent implements AfterViewInit {
     });
 
     this.guardarMarcadoresLocalStorage()
+
+    nuevoMarcador.on('dragend', () => {
+      this.guardarMarcadoresLocalStorage()
+    })
   }
 
   irMarcador(marker: any) {
@@ -87,8 +91,6 @@ export class MarcadoresComponent implements AfterViewInit {
       center: marker.getLngLat(),
       essential: true
     })
-    console.log(marker);
-
   }
 
   guardarMarcadoresLocalStorage() {
@@ -96,7 +98,6 @@ export class MarcadoresComponent implements AfterViewInit {
     const lngLatArr: MarcadorColor[] = [];
 
     this.marcadores.forEach(m => {
-      debugger
       const color = m.color;
       const { lng, lat } = m.marker!.getLngLat();
 
@@ -114,7 +115,6 @@ export class MarcadoresComponent implements AfterViewInit {
     if (!localStorage.getItem('marcadores')) { return; }
 
     const lngLatArr: MarcadorColor[] = JSON.parse(localStorage.getItem('marcadores')!)
-    console.log(lngLatArr);
 
     lngLatArr.forEach(m => {
       const newMarker = new mapboxgl.Marker({
@@ -128,9 +128,19 @@ export class MarcadoresComponent implements AfterViewInit {
         marker: newMarker,
         color: m.color
       })
+
+      // al mover el marcador se guarda la posición
+      newMarker.on('dragend', () => {
+        this.guardarMarcadoresLocalStorage()
+      })
     });
 
+  }
 
+  borrarMarcador(i: number) {
+    this.marcadores[i].marker?.remove();
+    this.marcadores.splice(i, 1)
+    this.guardarMarcadoresLocalStorage();
   }
 
 }
